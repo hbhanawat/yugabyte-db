@@ -366,7 +366,9 @@ class PgSession : public RefCountedThreadSafe<PgSession> {
   }
 
   Result<client::RpcsInfo> ActiveUniverseHistory();
-  
+
+  Result<client::YCQLStatStatementsInfo> YCQLStatStatements();
+
   // Check whether the specified table has a CDC stream.
   Result<bool> IsObjectPartOfXRepl(const PgObjectId& table_id);
 

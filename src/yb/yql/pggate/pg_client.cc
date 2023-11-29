@@ -763,6 +763,20 @@ class PgClient::Impl {
     return result;
   }
 
+  Result<client::YCQLStatStatementsInfo> YCQLStatStatements() {
+    tserver::PgYCQLStatStatementsRequestPB req;
+    tserver::PgYCQLStatStatementsResponsePB resp;
+
+    RETURN_NOT_OK(proxy_->YCQLStatStatements(req, &resp, PrepareController()));
+    RETURN_NOT_OK(ResponseStatus(resp));
+    client::YCQLStatStatementsInfo result;
+    result.reserve(resp.statements().size());
+    for (const auto& server : resp.statements()) {
+      result.push_back(client::YCQLStatStatementInfo::FromPB(server));
+    }
+    return result;
+  }
+
   #define YB_PG_CLIENT_SIMPLE_METHOD_IMPL(r, data, method) \
   Status method( \
       tserver::BOOST_PP_CAT(BOOST_PP_CAT(Pg, method), RequestPB)* req, \
@@ -1019,6 +1033,10 @@ Result<tserver::PgGetTserverCatalogVersionInfoResponsePB> PgClient::GetTserverCa
 
 Result<client::RpcsInfo> PgClient::ActiveUniverseHistory() {
   return impl_->ActiveUniverseHistory();
+}
+
+Result<client::YCQLStatStatementsInfo> PgClient::YCQLStatStatements() {
+  return impl_->YCQLStatStatements();
 }
 
 Status PgClient::EnumerateActiveTransactions(

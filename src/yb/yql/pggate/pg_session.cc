@@ -990,4 +990,8 @@ Result<bool> PgSession::IsObjectPartOfXRepl(const PgObjectId& table_id) {
   return pg_client_.IsObjectPartOfXRepl(table_id);
 }
 
+Result<client::YCQLStatStatementsInfo> PgSession::YCQLStatStatements() {
+  return pg_client_.YCQLStatStatements();
+}
+
 }  // namespace yb::pggate

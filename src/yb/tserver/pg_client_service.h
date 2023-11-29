@@ -78,6 +78,7 @@ class PgMutationCounter;
     (ActiveUniverseHistory) \
     (GetTServerUUID) \
     (GetActiveTransactionList) \
+    (YCQLStatStatements) \
     /**/
 
 class PgClientServiceImpl : public PgClientServiceIf {

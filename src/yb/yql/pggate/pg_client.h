@@ -177,7 +177,9 @@ class PgClient {
       bool size_only, uint32_t db_oid);
 
   Result<client::RpcsInfo> ActiveUniverseHistory();
-  
+
+  Result<client::YCQLStatStatementsInfo> YCQLStatStatements();
+
   using ActiveTransactionCallback = LWFunction<Status(
       const tserver::PgGetActiveTransactionListResponsePB_EntryPB&, bool is_last)>;
   Status EnumerateActiveTransactions(
